@@ -1,0 +1,22 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# Remove API proxy redirects for production - handle CORS directly in the app
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://ghvtest.ghvcameroon.com/api/:splat"
+#   status = 200
+#   force = true
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Add headers for CORS handling
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
